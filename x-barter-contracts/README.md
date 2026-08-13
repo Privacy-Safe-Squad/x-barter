@@ -1,22 +1,36 @@
-# Soroban Project
+# x-barter-contracts
+
+[Soroban](https://soroban.stellar.org) smart contracts for X-Barter — a zero-knowledge exchange for Stellar assets. Trade XLM, USDC & Stellar tokens with complete privacy, using ZK-proofs to verify trades without exposing amounts or counterparties.
 
 ## Project Structure
-
-This repository uses the recommended structure for a Soroban project:
 
 ```text
 .
 ├── contracts
-│   └── hello_world
-│       ├── src
-│       │   ├── lib.rs
-│       │   └── test.rs
-│       └── Cargo.toml
+│   └── x_barter_core
+│       ├── src
+│       │   └── lib.rs
+│       ├── Cargo.toml
+│       └── Makefile
 ├── Cargo.toml
 └── README.md
 ```
 
-- New Soroban contracts can be put in `contracts`, each in their own directory. There is already a `hello_world` contract in there to get you started.
-- If you initialized this project with any other example contracts via `--with-example`, those contracts will be in the `contracts` directory as well.
-- Contracts should have their own `Cargo.toml` files that rely on the top-level `Cargo.toml` workspace for their dependencies.
-- Frontend libraries can be added to the top-level directory as well. If you initialized this project with a frontend template via `--frontend-template` you will have those files already included.
+- `contracts/x_barter_core` holds the `XBarterCore` contract struct — the entrypoint future contributors will extend with the trade lifecycle, ZK-proof verification, and settlement interfaces.
+- New contracts can be added under `contracts/`, each in its own crate, relying on the top-level `Cargo.toml` workspace for shared dependencies (e.g. `soroban-sdk`).
+
+## Getting Started
+
+Requires the [Stellar CLI](https://developers.stellar.org/docs/tools/developer-tools#cli) and the `wasm32v1-none` Rust target.
+
+```bash
+rustup target add wasm32v1-none
+cd contracts/x_barter_core
+make build
+make test
+```
+
+## Related
+
+- [`x-barter-web`](../x-barter-web) — frontend web app
+- [`x-barter-api`](../x-barter-api) — backend API
